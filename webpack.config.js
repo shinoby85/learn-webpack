@@ -8,9 +8,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
     mode: "development",
+    context: path.resolve(__dirname,'src'),
     entry: {
-        main: './src/index.js',
-        analytics: './src/analytics.js'
+        main: './index.js',
+        analytics: './analytics.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -23,7 +24,7 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             title: "Test title",
-            template: "./src/index.html"
+            template: "./index.html"
         }),
         new CleanWebpackPlugin(),
     ],
