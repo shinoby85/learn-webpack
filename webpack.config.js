@@ -31,9 +31,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: '/\.[tj]s$/',
-                use: 'ts-loader',
-                exclude: /node_modules/,
+                test: /\.css$/,
+                use: ['style-loader','css-loader']
             }
         ]
     },
