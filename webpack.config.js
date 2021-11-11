@@ -17,7 +17,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js'
     },
-    watch: NODE_ENV === 'development',   //Автом. пересборка проекта при изменениях
+    watch: this.mode === 'development',   //Автом. пересборка проекта при изменениях
     watchOptions: {
         aggregateTimeout: 100       //Задание таймаута перед пересборкой проекта
     },
@@ -33,6 +33,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader','css-loader']
+            },
+            {
+                test: /\.(png|jpg|svg|gif)$/,
+                use: ['file-loader']
             }
         ]
     },
