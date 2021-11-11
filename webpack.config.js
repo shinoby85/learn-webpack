@@ -2,7 +2,6 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 const path = require('path');
-const {mode} = require("./webpack.config");
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -15,7 +14,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[contenthash].js'
+        filename: '[name].[contenthash].js',
+        assetModuleFilename: "assets/[name][ext]",
     },
     watch: this.mode === 'development',   //Автом. пересборка проекта при изменениях
     watchOptions: {
@@ -35,8 +35,8 @@ module.exports = {
                 use: ['style-loader','css-loader']
             },
             {
-                test: /\.(png|jpg|svg|gif)$/,
-                use: ['file-loader']
+                test: /\.(?:png|jpg|svg|gif)$/i,
+                type: "asset/resource",
             }
         ]
     },
