@@ -2,6 +2,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 const path = require('path');
+const assert = require("assert");
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -41,10 +42,21 @@ module.exports = {
             {
                 test: /\.(ttf|woff|woff2|eot)/,
                 type: "asset/resource",
+            },
+            {
+                test: /\.xml$/,
+                use: ['xml-loader']
+            },
+            {
+                test: /\.csv$/,
+                use: ['csv-loader']
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            '@assets': path.resolve(__dirname, 'src/assets')
+        }
     }
 };
