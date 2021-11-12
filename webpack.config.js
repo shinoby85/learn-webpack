@@ -13,6 +13,17 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV !== 'development';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+const filename = ext => isDev ? `[name].${ext}`:`[name].[hash].${ext}`
+const cssLoaders = preproc=>{
+    const use=[{
+        loader: MiniCssExtractPlugin.loader
+    }, 'css-loader']
+    if(preproc){
+        use.push(`${preproc.toLowerCase()}-loader`)
+    }
+    return use;
+}
+
 const plugins = [
     new HTMLWebpackPlugin({
         title: "Test title",
@@ -24,7 +35,7 @@ const plugins = [
     new CleanWebpackPlugin(),   //Очистка папки dist перед каждой новой сборкой
     new FaviconsWebpackPlugin('./favicon.png'),
     new MiniCssExtractPlugin({
-        filename: '[name].css'
+        filename: filename('css')
     }),
 
 ];
@@ -43,7 +54,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[contenthash].js',
+        filename: filename('js'),
         assetModuleFilename: "assets/[name][ext]",
     },
     watch: this.mode === 'development',   //Автом. пересборка проекта при изменениях
@@ -55,9 +66,15 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [{
-                    loader: MiniCssExtractPlugin.loader
-                }, 'css-loader']
+                use: cssLoaders()
+            },
+            {
+                test: /\.less$/,
+                use: cssLoaders('less')
+            },
+            {
+                test: /\.s[ac]ss$/,
+                use: cssLoaders('sass')
             },
             {
                 test: /\.(?:png|jpg|svg|gif)$/i,
