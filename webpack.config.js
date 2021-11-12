@@ -58,5 +58,10 @@ module.exports = {
         alias: {
             '@assets': path.resolve(__dirname, 'src/assets')
         }
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all"   //Позволяет перенести общий код в отдельный файл (для оптимизации)
+        }
     }
 };
