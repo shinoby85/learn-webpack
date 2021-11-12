@@ -1,5 +1,6 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const path = require('path');
 const assert = require("assert");
@@ -8,7 +9,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
     mode: "development",
-    context: path.resolve(__dirname,'src'),
+    context: path.resolve(__dirname, 'src'),
     entry: {
         main: './index.js',
         analytics: './analytics.js'
@@ -28,12 +29,14 @@ module.exports = {
             template: "./index.html"
         }),
         new CleanWebpackPlugin(),
+        new FaviconsWebpackPlugin('./favicon.png')
+
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader','css-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(?:png|jpg|svg|gif)$/i,
@@ -63,5 +66,8 @@ module.exports = {
         splitChunks: {
             chunks: "all"   //Позволяет перенести общий код в отдельный файл (для оптимизации)
         }
+    },
+    devServer: {
+        port: 4300
     }
 };
