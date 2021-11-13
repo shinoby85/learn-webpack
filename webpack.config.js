@@ -13,22 +13,35 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV !== 'development';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const filename = ext => isDev ? `[name].${ext}`:`[name].[hash].${ext}`
-const cssLoaders = preproc=>{
-    const use=[{
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+const cssLoaders = preproc => {
+    const use = [{
         loader: MiniCssExtractPlugin.loader
     }, 'css-loader']
-    if(preproc){
+    if (preproc) {
         use.push(`${preproc.toLowerCase()}-loader`)
     }
     return use;
+}
+const jsLoaders = () => {
+    const loaders = [{
+        loader: "babel-loader",
+        options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties']
+        }
+    }]
+    if (isDev){
+        loaders.push('eslint-loader')
+    }
+    return loaders
 }
 
 const plugins = [
     new HTMLWebpackPlugin({
         title: "Test title",
         template: "./index.html",
-        minify:{
+        minify: {
             collapseWhitespace: isProd,
         }
     }),
@@ -49,7 +62,7 @@ module.exports = {
     mode: "development",
     context: path.resolve(__dirname, 'src'),
     entry: {
-        main: ['@babel/polyfill','./index.jsx'],
+        main: ['@babel/polyfill', './index.jsx'],
         analytics: './analytics.ts'
     },
     output: {
@@ -96,13 +109,7 @@ module.exports = {
             {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['@babel/preset-env'],
-                        plugins:['@babel/plugin-proposal-class-properties']
-                    }
-                }
+                use: jsLoaders(),
             },
             {
                 test: /\.ts$/,
@@ -111,7 +118,7 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-typescript'],
-                        plugins:['@babel/plugin-proposal-class-properties']
+                        plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
             },
@@ -122,7 +129,7 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins:['@babel/plugin-proposal-class-properties']
+                        plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
             }
