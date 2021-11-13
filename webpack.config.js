@@ -61,6 +61,7 @@ module.exports = {
     watchOptions: {
         aggregateTimeout: 100       //Задание таймаута перед пересборкой проекта
     },
+    devtool: isDev ? 'eval' : 'source-map',
     plugins,
     module: {
         rules: [
