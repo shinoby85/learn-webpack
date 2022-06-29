@@ -10,7 +10,7 @@ const path = require('path');
 const assert = require("assert");
 
 const isDev = process.env.NODE_ENV === 'development';
-const isProd = process.env.NODE_ENV !== 'development';
+const isProd = process.env.NODE_ENV === 'production';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const plugins = [
@@ -38,8 +38,8 @@ module.exports = {
     mode: "development",
     context: path.resolve(__dirname, 'src'),
     entry: {
-        main: './index.js',
-        analytics: './analytics.js'
+        main: './index',
+        analytics: './analytics'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -80,7 +80,8 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
         alias: {
-            '@assets': path.resolve(__dirname, 'src/assets')
+            '@assets': path.resolve(__dirname, 'src/assets'),
+            '@data': path.resolve(__dirname,'src','assets','fonts','myFont','data')
         }
     },
     optimization: {
@@ -91,7 +92,7 @@ module.exports = {
             new CssMinimizerPlugin(),      //Оптимизация CSS
             new TerserWebpackPlugin()   //Оптимизация JavaScript
         ],
-        minimize: isProd    //Разрешить оптимизацию в случае prodaction
+        minimize: isProd    //Разрешить оптимизацию в случае production
     },
     devServer: {
         port: 4300,
