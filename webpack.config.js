@@ -23,15 +23,21 @@ const cssLoaders = preproc => {
     }
     return use;
 }
-const jsLoaders = () => {
-    const loaders = [{
+const jsLoaders = (preset) => {
+    const isLint = !preset;
+    const loaders = [];
+    const babel = {
         loader: "babel-loader",
         options: {
             presets: ['@babel/preset-env'],
             plugins: ['@babel/plugin-proposal-class-properties']
         }
-    }]
-    if (isDev){
+    }
+    if(preset){
+        babel.options.presets.push(`@babel/preset-${preset.toLowerCase()}`);
+    }
+    loaders.push(babel);
+    if (isDev && isLint){
         loaders.push('eslint-loader')
     }
     return loaders
@@ -114,24 +120,12 @@ module.exports = {
             {
                 test: /\.ts$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-typescript'],
-                        plugins: ['@babel/plugin-proposal-class-properties']
-                    }
-                }
+                use: jsLoaders('typescript')
             },
             {
                 test: /\.jsx$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: ['@babel/plugin-proposal-class-properties']
-                    }
-                }
+                use: jsLoaders('react')
             }
         ]
     },
