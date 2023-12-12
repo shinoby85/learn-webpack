@@ -1,0 +1,372 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    text-shadow: white 1px 0 4px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    background-size: cover;
+    color: #000;
+    transition: background-image 1s ease-in-out;
+}
+.poopap__key,
+.poopap__background,
+.poopap__window{
+    display: none;
+}
+
+.poopap__key:checked ~ .poopap__background{
+    display: block;
+}
+
+
+.poopap__background{
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    background-color: rgba(0,0,0,.7);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+}
+.poopap__window{
+    position: fixed;
+    width: 40%;
+    height: 450px;
+    z-index: 30;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+.poopap__title{
+    margin-bottom: 10px;
+}
+.pCity{
+    margin-top: 20px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 240px;
+    min-height: 240px;
+    float: left;
+}
+.city{
+    margin-left: 20px;
+    padding-right: 10px;
+}
+.grid-content {
+    margin: 0 auto;
+    width: 95%;
+    height: 95%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 2fr 1fr;
+    grid-gap: 5%;
+}
+
+.main-clock,
+.world-clocks,
+.weather,
+.quotes {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    border-radius: 15px;
+}
+
+.main-clock {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: rgba(0,233,255,.5);
+    
+}
+
+
+.time {
+    font-size: 6rem;
+}
+
+.tDay {
+    font-size: 2rem;
+}
+
+h1 {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+h1 > span {
+    margin-right: 10px;
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.world-clocks {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgba(255,79,79,.5);
+
+}
+
+.clock-canvas {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+.world-clocks__title {
+    font-weight: bold;
+    font-size: 30px;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, .5);
+    box-shadow: 0 0 6px 10px rgba(255, 255, 255, .5);
+
+}
+
+.weather {
+    padding-top: 35px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(0,67,255,.5);
+}
+
+.weather__city {
+    font-size: 4rem;
+}
+
+.wContainer {
+    width: 600px;
+    height: 170px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.wImg {
+    border-radius: 50%;
+    background-image: url(assets/images/weather-icon.jpg);
+    background-position: 220px 220px;
+    background-repeat: no-repeat;
+    width: 165px;
+    height: 165px;
+    margin-right: 20px;
+}
+
+.wTemperature,
+.wHumidity,
+.wSpeedWind {
+    -ms-text-align-last: right;
+    text-align-last: left;
+    margin-top: 30px;
+    width: 400px;
+    line-height: 25px;
+    height: 20px;
+    font-size: 25px;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px antiquewhite;
+
+}
+.world-clocks{
+    position: relative;
+}
+.wcLabel{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url(assets/images/help.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.wcLabel:hover{
+    cursor: pointer;
+}
+
+.quotes {
+    padding: 60px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: rgba(238,255,201,.5);
+
+}
+
+.qText {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px blue;
+    background-color: rgba(255, 255, 255, .5);
+    box-shadow: 0 0 6px 10px rgba(255, 255, 255, .5);
+}
+
+.qAutor {
+    width: 200px;
+    margin-top: 30px;
+    text-align: right;
+    text-shadow: 1px 1px 1px blue;
+    background-color: rgba(255, 255, 255, .5);
+    box-shadow: 0 0 6px 10px rgba(255, 255, 255, .5);
+}
+
+.qUpdate,
+.updBack {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background-image: url(assets/images/btnUpdate.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+}
+
+.qUpdate:hover,
+.updBack:hover {
+    cursor: pointer;
+}
+
+.rotate {
+    transform: rotate(360deg);
+    transition: all 1s;
+    background-color: #FF0000;
+}
+
+@media screen and (max-width: 1439.97px) {
+    html {
+        font-size: 14px;
+    }
+
+    body {
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    .grid-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+
+    }
+
+    .main-clock {
+        height: 400px;
+    }
+
+    .wContainer {
+        height: 350px;
+        align-items: center;
+    }
+
+    .world-clocks {
+        height: 300px;
+    }
+    .quotes{
+        margin-bottom: 30px;
+    }
+
+}
+@media screen and (max-width: 1059.97px){
+    .poopap__window{
+        width: 80%;
+    }
+}
+@media (max-width: 700px) {
+
+    .grid-content {
+        width: 100%;
+        padding: 10px;
+    }
+
+
+    .time {
+        font-size: 4rem;
+    }
+
+    .main-clock {
+        height: 480px;
+    }
+
+    .tBlock {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wContainer {
+        width: 100%;
+    }
+
+    .wTemperature,
+    .wHumidity,
+    .wSpeedWind {
+        width: 100%;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .weather__city {
+        font-size: 3rem;
+    }
+
+    .world-clocks {
+        flex-direction: column;
+        height: 610px;
+    }
+
+    .world-clocks__title {
+        margin-top: 15px;
+        font-size: 23px;
+    }
+
+    .quotes {
+        min-height: 300px;
+        padding: 20px 20px 70px;
+        overflow: auto;
+        position: relative;
+        justify-content: space-between;
+    }
+    .qText{
+        font-size: 16px;
+    }
+
+    .qUpdate {
+        right: 20px;
+    }
+
+}
+@media screen and (max-width: 539.97px){
+    .poopap__window{
+        width: 95%;
+        height: 570px;
+    }
+}

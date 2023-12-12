@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <title>Momentum</title>
 </head>
 <body>
-<div class="container">
-    <h1>Webpack course</h1>
-    <hr>
-    <div class="logo"></div>
-    <hr>
-    <pre></pre>
-    <div class="box">
-        <h2>Less</h2>
+<input id="pKey" type="checkbox" class="poopap__key">
+<label id="pBack"  for="pKey" class="poopap__background"></label>
+<div id="pWindow" class="poopap__window animate__animated ">
+    <h1 class="poopap__title">Справочная информация</h1>
+    <p class="poopap__anotation">Город, для погоды, задается на русском языке.</p>
+    <p class="poopap__anotation">Города для часов задаются на английском. В случае если город задан не правильно - часы
+        примут значение [NAME OF CITY]. Список допустимых значений городов приведен ниже и основан на API. В случае
+        возникновения вопросов по работе приложения свяжитесь со мной.</p>
+    <div class="block-city">
+
+        <ul id="pCity" class="pCity">
+
+        </ul>
     </div>
-    <div class="box-scss">
-        <h2>Scss</h2>
-    </div>
+</div>
+<div class="grid-content">
+    <section class="main-clock">
+        <time class="time"></time>
+        <h1 id="tDay" class="tDay"></h1>
+        <h1 class="tBlock">
+            <span class="greeting"></span>
+            <span class="name" contenteditable="true"></span>
+        </h1>
+        <h2>What Is Your Focus For Today?</h2>
+        <h2 class="focus" contenteditable="true"></h2>
+        <div id="updBack" class="updBack"></div>
+    </section>
+    <section class="weather">
+        <h1 id="wCity" class="weather__city" contenteditable="true">[Enter City]</h1>
+        <div class="wContainer">
+            <div id="wImg" class="wImg"></div>
+            <p id="wTemperature" class="wTemperature"></p>
+            <p id="wHumidity" class="wHumidity"></p>
+            <p id="wSpeedWind" class="wSpeedWind"></p>
+        </div>
+
+
+    </section>
+    <section class="world-clocks">
+        <label id="wcLabel" for="pKey" class="wcLabel"></label>
+        <div class="clock">
+            <canvas height='200' width='200' id='myCanvas1' class="clock-canvas"></canvas>
+            <h3 id="clockFirst" class="world-clocks__title" contenteditable="true">[Name of City]</h3>
+        </div>
+        <div class="clock">
+            <canvas height='200' width='200' id='myCanvas2' class="clock-canvas"></canvas>
+            <h3 id="clockSecond" class="world-clocks__title" contenteditable="true">[Name of City]</h3>
+        </div>
+    </section>
+    <section class="quotes">
+        <p id="qText" class="qText"></p>
+        <p id="qAutor" class="qAutor"></p>
+        <div id="qUpdate" class="qUpdate"></div>
+    </section>
 </div>
 </body>
 </html>

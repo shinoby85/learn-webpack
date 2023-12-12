@@ -1,6 +1,5 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const TerserWebpackPlugin = require('terser-webpack-plugin')
@@ -26,14 +25,13 @@ const cssLoaders = preproc=>{
 
 const plugins = [
     new HTMLWebpackPlugin({
-        title: "Test title",
+        title: "Momentum",
         template: "./index.html",
         minify:{
             collapseWhitespace: isProd,
         }
     }),
     new CleanWebpackPlugin(),   //Очистка папки dist перед каждой новой сборкой
-    new FaviconsWebpackPlugin('./favicon.png'),
     new MiniCssExtractPlugin({
         filename: filename('css')
     }),
@@ -49,8 +47,7 @@ module.exports = {
     mode: "development",
     context: path.resolve(__dirname, 'src'),
     entry: {
-        main: ['@babel/polyfill','./index.js'],
-        analytics: './analytics.ts'
+        main: ['@babel/polyfill','./index.ts']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -69,39 +66,12 @@ module.exports = {
                 use: cssLoaders()
             },
             {
-                test: /\.less$/,
-                use: cssLoaders('less')
-            },
-            {
-                test: /\.s[ac]ss$/,
-                use: cssLoaders('sass')
-            },
-            {
                 test: /\.(?:png|jpg|svg|gif)$/i,
                 type: "asset/resource",
             },
             {
                 test: /\.(ttf|woff|woff2|eot)/,
                 type: "asset/resource",
-            },
-            {
-                test: /\.xml$/,
-                use: ['xml-loader']
-            },
-            {
-                test: /\.csv$/,
-                use: ['csv-loader']
-            },
-            {
-                test: /\.m?js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['@babel/preset-env'],
-                        plugins:['@babel/plugin-proposal-class-properties']
-                    }
-                }
             },
             {
                 test: /\.ts$/,
@@ -117,7 +87,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts'],
         alias: {
             '@assets': path.resolve(__dirname, 'src/assets')
         }
