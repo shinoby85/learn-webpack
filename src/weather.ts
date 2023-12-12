@@ -1,157 +1,70 @@
-'use strict'
-const wCity = document.getElementById('wCity')
-const wImg = document.getElementById('wImg')
-const wTemperature = document.getElementById('wTemperature')
-const wHumidity = document.getElementById('wHumidity')
-const wSpeedWind = document.getElementById('wSpeedWind')
+import {IOpenWeatherResponse} from "./interfaces";
+import clear from './assets/weather/clear.png';
+import cloud from './assets/weather/cloud.png';
+import mist from './assets/weather/mist.png';
+import rain from './assets/weather/rain.png';
 
-async function updateWeather(lang = 'ru', units = 'metric') {
-    if(wCity.innerText==='' && localStorage.getItem('safeCity')!==null){
-        localStorage.setItem('wCity', localStorage.getItem('safeCity'));
-    }
-    getCity();
-    if (wCity.innerText === '[Enter City]') {
-        wImg.style.display = 'none'
+const weather:HTMLElement = document.querySelector('.weather');
+const search = document.querySelector('.search-container button');
+const weatherBox = document.querySelector('.weather-box');
+const weatherDetails = document.querySelector('.weather-details');
+const notFound = document.querySelector('.not-found');
+
+search.addEventListener('click', () => {
+    const APIkey = 'd1d077490e83c5a92ea9d3cef5eb5c44';
+    const city = (document.querySelector('.search-container input') as HTMLInputElement).value;
+
+    if (city === '') {
         return;
     }
-    wImg.style.display = 'block'
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=ru&appid=${APIkey}`)
+        .then(response => response.json())
+        .then((json: IOpenWeatherResponse) => {
+            console.log(json);
+            if (json.cod === 404) {
+                weather.style.height = '400px';
+                weatherBox.classList.remove('active');
+                weatherDetails.classList.remove('active');
+                notFound.classList.add('active');
+                return;
+            }
+            weather.style.height = '555px';
+            weatherBox.classList.add('active');
+            weatherDetails.classList.add('active');
+            notFound.classList.remove('active');
 
-    let city = wCity.innerText;
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=621b956eda4a85205fe44caea6213113&units=${units}`
-    const request = await fetch(url)
-    const dataWeather = await request.json();
-    if (dataWeather.cod !== '404') {
-        let wId = dataWeather.weather[0].id
-        if (wId >= 200 && wId <= 299) {
-            if (wId === 201 || wId === 211 || wId === 231) {
-                wImg.style.backgroundPositionX = '-150px'
-                wImg.style.backgroundPositionY = '-350px'
-            } else if (wId === 201 || wId === 211 || wId === 231) {
-                wImg.style.backgroundPositionX = '-310px'
-                wImg.style.backgroundPositionY = '-350px'
-            } else {
-                wImg.style.backgroundPositionX = '0'
-                wImg.style.backgroundPositionY = '-350px'
+            const image: HTMLImageElement = document.querySelector('.weather-box img');
+            const temperature = document.querySelector('.weather-box .temp');
+            const description = document.querySelector('.weather-box .description');
+            const humidity = document.querySelector('.weather-details .humidity span');
+            const wind = document.querySelector('.weather-details .wind span');
+
+            switch (json.weather[0].main) {
+                case 'Clear':
+                    image.src = clear;
+                    break;
+                case 'Clouds':
+                    image.src = cloud;
+                    break;
+                case 'Mist':
+                    image.src = mist;
+                    break;
+                case 'Rain':
+                    image.src = rain;
+                    break;
+                case 'Snow':
+                    image.src = 'assets/weather/snow.png';
+                    break;
+                case 'Haze':
+                    image.src = 'assets/weather/mist.png';
+                    break;
+                default:
+                    image.src = 'assets/weather/cloud.png';
             }
 
-        }
-        if ((wId >= 300 && wId <= 399) || (wId >= 500 && wId <= 599)) {
-            if (wId === 302 || wId === 502 || wId === 503 || wId === 504 || wId === 520 || wId === 522 || wId === 531) {
-                wImg.style.backgroundPositionX = '-315px'
-                wImg.style.backgroundPositionY = '-180px'
-            } else if (wId === 321 || wId === 511) {
-                wImg.style.backgroundPositionX = '-470px'
-                wImg.style.backgroundPositionY = '-350px'
-            } else if (wId === 313 || wId === 314) {
-                wImg.style.backgroundPositionX = '-470px'
-                wImg.style.backgroundPositionY = '-180px'
-            } else {
-                wImg.style.backgroundPositionX = '-155px'
-                wImg.style.backgroundPositionY = '-180px'
-            }
-
-
-        }
-        if (wId >= 600 && wId <= 699) {
-            if (wId === 611 || wId === 612 || wId === 613 || wId === 615) {
-                wImg.style.backgroundPositionX = '-470px'
-                wImg.style.backgroundPositionY = '-350px'
-            } else if (wId === 616 || wId === 621) {
-                wImg.style.backgroundPositionX = '-470px'
-                wImg.style.backgroundPositionY = '-180px'
-            } else if (wId === 602 || wId === 622) {
-                wImg.style.backgroundPositionX = '-795px'
-                wImg.style.backgroundPositionY = '-350px'
-            } else {
-                wImg.style.backgroundPositionX = '-635px'
-                wImg.style.backgroundPositionY = '-350px'
-            }
-
-        }
-        if (wId >= 700 && wId <= 799) {
-            if (wId === 731 || wId === 762 || wId === 771 || wId === 781) {
-                wImg.style.backgroundPositionX = '-795px'
-                wImg.style.backgroundPositionY = '-180px'
-            } else {
-                wImg.style.backgroundPositionX = '-635px'
-                wImg.style.backgroundPositionY = '-180px'
-            }
-
-
-        }
-        if (wId >= 800 && wId <= 899) {
-            if (wId === 804) {
-                wImg.style.backgroundPositionX = '0'
-                wImg.style.backgroundPositionY = '-180px'
-            } else if (wId === 803) {
-                wImg.style.backgroundPositionX = '-795px'
-                wImg.style.backgroundPositionY = '-20px'
-            } else if (wId === 802) {
-                wImg.style.backgroundPositionX = '-325px'
-                wImg.style.backgroundPositionY = '-20px'
-            } else if (wId === 801) {
-                wImg.style.backgroundPositionX = '-160px'
-                wImg.style.backgroundPositionY = '-20px'
-            } else {
-                wImg.style.backgroundPositionX = '0'
-                wImg.style.backgroundPositionY = '-20px'
-            }
-
-        }
-        wTemperature.innerHTML = `${Math.round(dataWeather.main.temp)} C&#176;, ${dataWeather.weather[0].description}`
-        wHumidity.innerText = `Влажность: ${dataWeather.main.humidity} %`
-        wSpeedWind.innerText = `Скорость ветра: ${dataWeather.wind.speed} метр / сек`
-        safeOldCity()
-    }
-    else{
-        wTemperature.innerHTML = `!!!! ВНИМАНИЕ !!!!`
-        wHumidity.innerText = `Введенный город отсутствует, либо данные не корректны`
-        wSpeedWind.innerText = ``
-        wImg.style.display = 'none'
-    }
-
-
-}
-
-function getCity() {
-    if (localStorage.getItem('wCity') === null) {
-        wCity.textContent = '[Enter City]';
-    } else {
-        wCity.textContent = localStorage.getItem('wCity');
-    }
-}
-
-function setCity(e) {
-
-    if (e.type === 'keypress') {
-        // Make sure enter is pressed
-        if (e.which == 13 || e.keyCode == 13) {
-            localStorage.setItem('wCity', e.target.innerText);
-            wCity.blur();
-        }
-    } else {
-        localStorage.setItem('wCity', e.target.innerText);
-    }
-}
-function safeOldCity(){
-    if (wCity.textContent !== '[Enter City]' && wCity.textContent.trim() !== '') {
-        localStorage.setItem('safeCity', wCity.textContent)
-    }
-
-}
-
-wCity.addEventListener('click',function (){
-    wCity.innerText=''
+            temperature.innerHTML = `${json.main.temp}<span>&#8451;</span>`;
+            description.innerHTML = `${json.weather[0].description}`;
+            humidity.innerHTML = `${json.main.humidity}%`;
+            wind.innerHTML = `${json.wind.speed} Km/h`;
+        })
 })
-wCity.addEventListener('keypress', setCity);
-wCity.addEventListener('blur', setCity);
-
-
-wCity.addEventListener('blur', function (e) {
-    updateWeather();
-})
-
-
-updateWeather();
-
-

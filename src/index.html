@@ -1,66 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
-    <title>Momentum</title>
+    <meta charset="UTF-8">
+    <title>momentum</title>
 </head>
 <body>
-<input id="pKey" type="checkbox" class="poopap__key">
-<label id="pBack"  for="pKey" class="poopap__background"></label>
-<div id="pWindow" class="poopap__window animate__animated ">
-    <h1 class="poopap__title">Справочная информация</h1>
-    <p class="poopap__anotation">Город, для погоды, задается на русском языке.</p>
-    <p class="poopap__anotation">Города для часов задаются на английском. В случае если город задан не правильно - часы
-        примут значение [NAME OF CITY]. Список допустимых значений городов приведен ниже и основан на API. В случае
-        возникновения вопросов по работе приложения свяжитесь со мной.</p>
-    <div class="block-city">
-
-        <ul id="pCity" class="pCity">
-
-        </ul>
+<button id="update" class="update__background"></button>
+<section class="todo-list">
+    <div class="add__task todo-list__field">
+        <input id="addField" class="add-field" type="text" placeholder="add your task">
+        <button id="addBtn" class="add-button"><i class='bx bx-task'></i></button>
     </div>
-</div>
-<div class="grid-content">
-    <section class="main-clock">
-        <time class="time"></time>
-        <h1 id="tDay" class="tDay"></h1>
-        <h1 class="tBlock">
-            <span class="greeting"></span>
-            <span class="name" contenteditable="true"></span>
-        </h1>
-        <h2>What Is Your Focus For Today?</h2>
-        <h2 class="focus" contenteditable="true"></h2>
-        <div id="updBack" class="updBack"></div>
-    </section>
-    <section class="weather">
-        <h1 id="wCity" class="weather__city" contenteditable="true">[Enter City]</h1>
-        <div class="wContainer">
-            <div id="wImg" class="wImg"></div>
-            <p id="wTemperature" class="wTemperature"></p>
-            <p id="wHumidity" class="wHumidity"></p>
-            <p id="wSpeedWind" class="wSpeedWind"></p>
+    <div id="pendingTasks" class="pending__tasks todo-list__field"></div>
+    <div id="completedTasks" class="completed__tasks todo-list__field"></div>
+    <div class="buttons_wrapper todo-list__field">
+        <button id="saveLS">Save storage</button>
+        <button id="loadLS">Load storage</button>
+    </div>
+</section>
+<section class="date">
+    <div class="date__wrapper">
+        <div class="hours"></div>
+        <span>:</span>
+        <div class="minutes"></div>
+        <span>:</span>
+        <div class="seconds"></div>
+    </div>
+    <h1 class="toDay"></h1>
+    <h1>
+        <span class="greeting"></span>
+        <span class="name" contenteditable="true">[enter name]</span>
+    </h1>
+    <h2>What Is Your Focus For Today?</h2>
+    <h2 class="focus" contenteditable="true">[enter focus]</h2>
+    <div class="quote">
+        <p id="content">Quote Content Here</p>
+        <p id="author">Quote Author Here</p>
+    </div>
+</section>
+<section class="weather">
+    <div class="search-container">
+        <i class='bx bxs-map'></i>
+        <input type="text" placeholder="enter city">
+        <button class="bx bx-search-alt"></button>
+    </div>
+    <div class="weather-container">
+        <div class="weather-box">
+            <div class="box">
+                <img src="" alt="weather icon">
+                <p class="temp"></p>
+                <p class="description"></p>
+            </div>
         </div>
-
-
-    </section>
-    <section class="world-clocks">
-        <label id="wcLabel" for="pKey" class="wcLabel"></label>
-        <div class="clock">
-            <canvas height='200' width='200' id='myCanvas1' class="clock-canvas"></canvas>
-            <h3 id="clockFirst" class="world-clocks__title" contenteditable="true">[Name of City]</h3>
+    </div>
+    <div class="weather-details">
+        <div class="humidity">
+            <i class='bx bx-water'></i>
+            <div class="info-humidity">
+                <span></span>
+                <p>Humidity</p>
+            </div>
         </div>
-        <div class="clock">
-            <canvas height='200' width='200' id='myCanvas2' class="clock-canvas"></canvas>
-            <h3 id="clockSecond" class="world-clocks__title" contenteditable="true">[Name of City]</h3>
+        <div class="wind">
+            <i class='bx bx-wind'></i>
+            <div class="info-wind">
+                <span></span>
+                <p>Wind Speed</p>
+            </div>
         </div>
-    </section>
-    <section class="quotes">
-        <p id="qText" class="qText"></p>
-        <p id="qAutor" class="qAutor"></p>
-        <div id="qUpdate" class="qUpdate"></div>
-    </section>
-</div>
+    </div>
+    <div class="not-found">
+        <div class="box">
+            <img src=<%=require("./assets/weather/404.png")%> alt="404">
+            <p>Город не найден!!!</p>
+        </div>
+    </div>
+</section>
 </body>
 </html>

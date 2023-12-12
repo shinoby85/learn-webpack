@@ -1,7 +1,8 @@
-import './assets/images'
 import './style.css';
+import 'boxicons';
 
-import './script';
-import './clockscript';
+import './update_bg';
+import './currentDate';
+import './quote';
 import './weather';
-import './quotes';
+import './toDoList';
